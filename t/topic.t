@@ -8,15 +8,24 @@ use Try;
 
 my ( $error, $topic );
 
+my $last_did_not_exit_loop;
+
 for ("foo") {
     try {
         die "blah\n";
     } catch {
+        is \$_, \$_[0], "topic is an alias";
         $topic = $_;
         $error = $_[0];
+        no warnings;
+        last;
     }
     pass("syntax ok");
+    $last_did_not_exit_loop = 1;
+    is $_, "foo", '$_ not clobbered';
 }
+
+ok $last_did_not_exit_loop, 'implicit loop inside catch';
 
 is( $error, "blah\n", "error caught" );
 
