@@ -6,42 +6,42 @@ use Test::More;
 use Try;
 
 try {
-	my $a = 1+1;
+    my $a = 1+1;
 } catch {
-	fail('Cannot go into catch block because we did not throw an exception')
+    fail('Cannot go into catch block because we did not throw an exception')
 } finally {
-	pass('Moved into finally from try');
+    pass('Moved into finally from try');
 }
 
 try {
-	die('Die');
+    die('Die');
 } catch {
-	ok($_ =~ /Die/, 'Error text as expected');
-	pass('Into catch block as we died in try');
+    ok($_ =~ /Die/, 'Error text as expected');
+    pass('Into catch block as we died in try');
 } finally {
-	pass('Moved into finally from catch');
+    pass('Moved into finally from catch');
 }
 
 try {
-	die('Die');
+    die('Die');
 } finally {
-	pass('Moved into finally block when try throws an exception and we have no catch block');
+    pass('Moved into finally block when try throws an exception and we have no catch block');
 }
 
 try {
-  # do not die
+    # do not die
 } finally {
-  if (@_) {
-    fail("errors reported: @_");
-  } else {
-    pass("no error reported") ;
-  }
+    if (@_) {
+        fail("errors reported: @_");
+    } else {
+        pass("no error reported") ;
+    }
 }
 
 try {
-  die("Die\n");
+    die("Die\n");
 } finally {
-  is_deeply(\@_, [ "Die\n" ], "finally got passed the exception");
+    is_deeply(\@_, [ "Die\n" ], "finally got passed the exception");
 }
 
 try {
