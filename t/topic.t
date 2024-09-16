@@ -8,16 +8,14 @@ use Try;
 
 my ( $error, $topic );
 
-given ("foo") {
-    when (qr/./) {
-        try {
-            die "blah\n";
-        } catch {
-            $topic = $_;
-            $error = $_[0];
-        }
-        pass("syntax ok");
-    };
+for ("foo") {
+    try {
+        die "blah\n";
+    } catch {
+        $topic = $_;
+        $error = $_[0];
+    }
+    pass("syntax ok");
 }
 
 is( $error, "blah\n", "error caught" );
